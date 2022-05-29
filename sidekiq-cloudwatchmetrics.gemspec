@@ -1,7 +1,7 @@
 # coding: utf-8
 Gem::Specification.new do |spec|
   spec.name          = "sidekiq-cloudwatchmetrics"
-  spec.version       = "2.2.0"
+  spec.version       = "0.46.2"
   spec.author        = "Samuel Cochran"
   spec.email         = "sj26@sj26.com"
 
