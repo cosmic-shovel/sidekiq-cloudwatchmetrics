@@ -11,7 +11,7 @@ module Sidekiq::CloudWatchMetrics
     Sidekiq.configure_server do |config|
       publisher = Publisher.new(**kwargs)
 
-      if Sidekiq.options[:lifecycle_events].has_key?(:leader)
+      if Sidekiq.options[:lifecycle_events].key?(:leader)
         # Only publish metrics on the leader if we have a leader (sidekiq-ent)
         config.on(:leader) do
           publisher.start
@@ -213,6 +213,10 @@ module Sidekiq::CloudWatchMetrics
 
     # Returns busy / concurrency averaged across processes (for scaling)
     private def calculate_utilization(processes)
+      if processes.empty?()
+        return 0.0
+      end
+      
       processes.map do |process|
         process["busy"] / process["concurrency"].to_f
       end.sum / processes.size.to_f
